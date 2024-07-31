@@ -58,3 +58,21 @@ def get_top_predictions(logits, vocab, mask_position, top_k=5):
 
     # Convert indices to words
     return [list(vocab.keys())[list(vocab.values()).index(idx)] for idx in top_indices]
+
+
+def get_sentences():
+    """Get example sentences."""
+    return [
+        "Ik heb een vriend die altijd te laat komt.",
+        "Ik weet die ik het kan.",
+        "Ik weet DAT ik het kan.",
+        "Daarom is het belangrijk, je moet goed opletten.",
+        "Ik ken een man die altijd grapjes maakt.",
+        "Ze heeft een jurk gekocht die perfect past.",
+        "Er is een boek dat ik je echt kan aanraden.",
+        "We bezochten een stad die bekend staat om haar architectuur.",
+        "Hij las een artikel dat zijn mening veranderde.",
+        "Ze vertelde over een ervaring die haar leven veranderde.",
+        "Ik zag een film die mij aan het denken zette.",
+        "Hij gebruikt een methode die zeer effectief is.",
+    ]

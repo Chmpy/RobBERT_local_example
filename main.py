@@ -1,7 +1,7 @@
 import logging
 from transformers import pipeline
 
-from utils import preprocess_input
+from utils import preprocess_input, get_sentences
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -29,20 +29,7 @@ def main(model_path):
     logging.info(f"Model loaded: {model_path}")
 
     # Example sentences
-    sentences = [
-        "Ik heb een vriend die altijd te laat komt.",
-        "Ik weet die ik het kan.",
-        "Ik weet DAT ik het kan.",
-        "Daarom is het belangrijk, je moet goed opletten.",
-        "Ik ken een man die altijd grapjes maakt.",
-        "Ze heeft een jurk gekocht die perfect past.",
-        "Er is een boek dat ik je echt kan aanraden.",
-        "We bezochten een stad die bekend staat om haar architectuur.",
-        "Hij las een artikel dat zijn mening veranderde.",
-        "Ze vertelde over een ervaring die haar leven veranderde.",
-        "Ik zag een film die mij aan het denken zette.",
-        "Hij gebruikt een methode die zeer effectief is.",
-    ]
+    sentences = get_sentences()
 
     for sentence in sentences:
         masked_sentence, _ = preprocess_input(sentence)

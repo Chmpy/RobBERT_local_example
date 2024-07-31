@@ -4,7 +4,7 @@ import torch
 from optimum.bettertransformer import BetterTransformer
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 
-from utils import preprocess_input, get_top_predictions
+from utils import preprocess_input, get_top_predictions, get_sentences
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -27,6 +27,7 @@ def load_model_and_tokenizer(model_name):
 def run_inference(model, tokenizer, input_sentence):
     """Run model inference on the input sentence."""
     inputs = tokenizer(input_sentence, return_tensors="pt")
+    logging.debug(f"Input tokens: {inputs}")
     with torch.no_grad():
         outputs = model(**inputs)
     return outputs.logits
@@ -34,20 +35,7 @@ def run_inference(model, tokenizer, input_sentence):
 
 def main(model_name):
     """Main function to process sentences with the specified model."""
-    sentences = [
-        "Ik heb een vriend die altijd te laat komt.",
-        "Ik weet die ik het kan.",
-        "Ik weet DAT ik het kan.",
-        "Daarom is het belangrijk, je moet goed opletten.",
-        "Ik ken een man die altijd grapjes maakt.",
-        "Ze heeft een jurk gekocht die perfect past.",
-        "Er is een boek dat ik je echt kan aanraden.",
-        "We bezochten een stad die bekend staat om haar architectuur.",
-        "Hij las een artikel dat zijn mening veranderde.",
-        "Ze vertelde over een ervaring die haar leven veranderde.",
-        "Ik zag een film die mij aan het denken zette.",
-        "Hij gebruikt een methode die zeer effectief is.",
-    ]
+    sentences = get_sentences()
 
     # Load the model and tokenizer
     model, tokenizer = load_model_and_tokenizer(model_name)
@@ -105,10 +93,10 @@ if __name__ == "__main__":
     """
 
     # Uncomment to set debug logging
-    # set_log_level(logging.DEBUG)
+    set_log_level(logging.DEBUG)
 
     # Process sentences with different models
-    main("pdelobelle/robbert-v2-dutch-base")
-    main("DTAI-KULeuven/robbert-2022-dutch-base")
-    main("DTAI-KULeuven/robbert-2023-dutch-base")
+    # main("pdelobelle/robbert-v2-dutch-base")
+    # main("DTAI-KULeuven/robbert-2022-dutch-base")
+    # main("DTAI-KULeuven/robbert-2023-dutch-base")
     main("DTAI-KULeuven/robbert-2023-dutch-large")

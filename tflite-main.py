@@ -1,11 +1,12 @@
 import json
 import logging
+import re
 
 import numpy as np
 import tensorflow as tf
 from tf_keras.src.utils import pad_sequences
 
-from utils import preprocess_input, get_top_predictions
+from utils import preprocess_input, get_top_predictions, get_sentences
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -28,7 +29,20 @@ def load_model(model_path):
 def tokenize(sentence, vocab):
     """Tokenize the input sentence using the provided vocabulary."""
     mask_token_id = vocab.get('<mask>', vocab.get('<unk>'))
-    return [vocab.get(token, vocab.get('<unk>')) if token != '<mask>' else mask_token_id for token in sentence.split()]
+    # Split the sentence on word boundaries and punctuation, but keep <mask> intact
+    split_sentence = re.findall(r'<mask>|\w+|[^\w\s]', sentence, re.UNICODE)
+    logging.debug(f'Split sentence: {split_sentence}')
+    tokenized_sentence = []
+    for token in split_sentence:
+        if token == '<mask>':
+            tokenized_sentence.append(mask_token_id)
+        elif re.match(r'[^\w\s]', token):
+            tokenized_sentence.append(vocab.get('Ġ', vocab.get('<unk>')))
+            tokenized_sentence.append(vocab.get(token, vocab.get('<unk>')))
+        else:
+            tokenized_sentence.append(vocab.get('Ġ' + token, vocab.get('<unk>')))
+
+    return tokenized_sentence
 
 
 def run_inference(interpreter, input_ids, attention_mask):
@@ -48,20 +62,7 @@ def main(model_dir=None):
     model_path = model_dir + '/model.tflite'
     vocab_path = model_dir + '/vocab.json'
 
-    sentences = [
-        "Ik heb een vriend die altijd te laat komt.",
-        "Ik weet die ik het kan.",
-        "Ik weet DAT ik het kan.",
-        "Daarom is het belangrijk, je moet goed opletten.",
-        "Ik ken een man die altijd grapjes maakt.",
-        "Ze heeft een jurk gekocht die perfect past.",
-        "Er is een boek dat ik je echt kan aanraden.",
-        "We bezochten een stad die bekend staat om haar architectuur.",
-        "Hij las een artikel dat zijn mening veranderde.",
-        "Ze vertelde over een ervaring die haar leven veranderde.",
-        "Ik zag een film die mij aan het denken zette.",
-        "Hij gebruikt een methode die zeer effectief is.",
-    ]
+    sentences = get_sentences()
 
     # Load vocabulary and model
     with open(vocab_path, 'r') as f:
@@ -138,17 +139,15 @@ if __name__ == "__main__":
     """
 
     # Uncomment to set debug logging
-    # set_log_level(logging.DEBUG)
+    set_log_level(logging.DEBUG)
 
     # Process sentences with different TFLite models
-    main(model_dir='robbert-v2-dutch-base_tflite')
-    main(model_dir='robbert-2022-dutch-base_tflite')
-    main(model_dir='robbert-2023-dutch-base_tflite')
+    # main(model_dir='robbert-v2-dutch-base_tflite')
+    # main(model_dir='robbert-2022-dutch-base_tflite')
+    # main(model_dir='robbert-2023-dutch-base_tflite')
     main(model_dir='robbert-2023-dutch-large_tflite')
 
-    main(model_dir='robbert-v2-dutch-base_tflite_int8')
-    main(model_dir='robbert-2022-dutch-base_tflite_int8')
-    main(model_dir='robbert-2023-dutch-base_tflite_int8')
-    main(model_dir='robbert-2023-dutch-large_tflite_int8')
-
-    # TODO: Check if the dims or quantization is causing the poor performance
+    # main(model_dir='robbert-v2-dutch-base_tflite_int8')
+    # main(model_dir='robbert-2022-dutch-base_tflite_int8')
+    # main(model_dir='robbert-2023-dutch-base_tflite_int8')
+    # main(model_dir='robbert-2023-dutch-large_tflite_int8')
