@@ -139,15 +139,15 @@ if __name__ == "__main__":
     """
 
     # Uncomment to set debug logging
-    set_log_level(logging.DEBUG)
+    # set_log_level(logging.DEBUG)
 
     # Process sentences with different TFLite models
-    # main(model_dir='robbert-v2-dutch-base_tflite')
-    # main(model_dir='robbert-2022-dutch-base_tflite')
-    # main(model_dir='robbert-2023-dutch-base_tflite')
+    main(model_dir='robbert-v2-dutch-base_tflite')
+    main(model_dir='robbert-2022-dutch-base_tflite')
+    main(model_dir='robbert-2023-dutch-base_tflite')
     main(model_dir='robbert-2023-dutch-large_tflite')
 
-    # main(model_dir='robbert-v2-dutch-base_tflite_int8')
-    # main(model_dir='robbert-2022-dutch-base_tflite_int8')
-    # main(model_dir='robbert-2023-dutch-base_tflite_int8')
-    # main(model_dir='robbert-2023-dutch-large_tflite_int8')
+    main(model_dir='robbert-v2-dutch-base_tflite_int8')
+    main(model_dir='robbert-2022-dutch-base_tflite_int8')
+    main(model_dir='robbert-2023-dutch-base_tflite_int8')
+    main(model_dir='robbert-2023-dutch-large_tflite_int8')

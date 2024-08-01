@@ -75,7 +75,7 @@ if __name__ == "__main__":
     models and provides detailed logging of the prediction process.
     
     Key features:
-    1. Loads different Dutch BERT models (RobBERT variants)
+    1. Loads different Dutch BERT models (RobBERT variants) and tokenizers
     2. Preprocesses input sentences to include a mask token
     3. Runs inference to predict masked words and post-processes the output
     4. Outputs top predictions for each masked position
@@ -93,10 +93,10 @@ if __name__ == "__main__":
     """
 
     # Uncomment to set debug logging
-    set_log_level(logging.DEBUG)
+    # set_log_level(logging.DEBUG)
 
     # Process sentences with different models
-    # main("pdelobelle/robbert-v2-dutch-base")
-    # main("DTAI-KULeuven/robbert-2022-dutch-base")
-    # main("DTAI-KULeuven/robbert-2023-dutch-base")
+    main("pdelobelle/robbert-v2-dutch-base")
+    main("DTAI-KULeuven/robbert-2022-dutch-base")
+    main("DTAI-KULeuven/robbert-2023-dutch-base")
     main("DTAI-KULeuven/robbert-2023-dutch-large")

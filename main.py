@@ -45,8 +45,8 @@ def main(model_path):
 if __name__ == '__main__':
     """
     This script performs masked language modeling using the Transformers pipeline
-    on various Dutch BERT models. It provides a simpler implementation compared to
-    the tf-main.py script, using the high-level pipeline API.
+    on various Dutch BERT models. It provides a simple way to load and run inference
+    using the high-level pipeline API.
 
     Key features:
     1. Uses Transformers pipeline for easy model loading and inference
