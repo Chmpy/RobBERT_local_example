@@ -21,12 +21,6 @@ def preprocess_input(sentence):
             break
     return ' '.join(words), mask_position
 
-    # Random masking (alternative approach):
-    # words = sentence.split()
-    # mask_position = np.random.randint(0, len(words))
-    # words[mask_position] = '<mask>'
-    # return ' '.join(words), mask_position
-
 
 def get_top_predictions(logits, vocab, mask_position, top_k=5):
     """
