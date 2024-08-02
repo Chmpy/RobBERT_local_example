@@ -1,4 +1,6 @@
 import logging
+import timeit
+
 from transformers import pipeline
 
 from utils import preprocess_input, get_sentences
@@ -31,13 +33,20 @@ def main(model_path):
     # Example sentences
     sentences = get_sentences()
 
+    start_total_time = timeit.default_timer()
     for sentence in sentences:
         masked_sentence, _ = preprocess_input(sentence)
+        start_time = timeit.default_timer()
         output = run_inference(masked_sentence, pipe)
+        elapsed_time = timeit.default_timer() - start_time
         logging.info(f"Original sentence: {sentence}")
         logging.info(f"Processed sentence: {masked_sentence}")
         logging.info(f"Prediction: {output}")
+        logging.info(f"Elapsed time: {elapsed_time:.3f} seconds\n")
         logging.info("")
+
+    total_time = timeit.default_timer() - start_total_time
+    logging.info(f"Total elapsed time: {total_time:.3f} seconds")
 
     logging.info("========================================")
 

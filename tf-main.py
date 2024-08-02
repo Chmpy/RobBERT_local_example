@@ -1,4 +1,5 @@
 import logging
+import timeit
 
 import torch
 from optimum.bettertransformer import BetterTransformer
@@ -42,6 +43,7 @@ def main(model_name):
     logging.info("========================================")
     logging.info(f"Model loaded: {model_name}")
 
+    start_total_time = timeit.default_timer()
     for input_sentence in sentences:
         # Preprocess the input
         processed_sentence, mask_position = preprocess_input(input_sentence)
@@ -50,7 +52,9 @@ def main(model_name):
 
         # Run inference and get top predictions
         if mask_position is not None:
+            start_time = timeit.default_timer()
             outputs = run_inference(model, tokenizer, processed_sentence)
+            elapsed_time = timeit.default_timer() - start_time
             top_words = get_top_predictions(outputs, tokenizer.get_vocab(), mask_position)
             logging.debug(f'Top predicted words: {top_words}')
             logging.info("")
@@ -59,10 +63,13 @@ def main(model_name):
                 output_sentence = processed_sentence.replace('<mask>', word)
                 logging.info(f'Output sentence: {output_sentence}')
 
+            logging.info(f"Elapsed time: {elapsed_time:.3f} seconds\n")
             logging.info("")
         else:
             logging.info('No mask token found in the input sentence.')
 
+    total_time = timeit.default_timer() - start_total_time
+    logging.info(f"Total elapsed time: {total_time:.3f} seconds")
     logging.info("========================================")
     logging.info("")
 

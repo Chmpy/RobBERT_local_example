@@ -1,6 +1,7 @@
 import json
 import logging
 import re
+import timeit
 
 import numpy as np
 import tensorflow as tf
@@ -71,6 +72,7 @@ def main(model_dir=None):
     logging.info("========================================")
     logging.info(f"Model loaded: {model_path}")
 
+    start_total_time = timeit.default_timer()
     for input_sentence in sentences:
         # Preprocess and tokenize input
         processed_sentence, mask_position = preprocess_input(input_sentence)
@@ -93,7 +95,9 @@ def main(model_dir=None):
 
         # Run inference and get top predictions
         if mask_position is not None:
+            start_time = timeit.default_timer()
             output = run_inference(interpreter, input_ids, attention_mask)
+            elapsed_time = timeit.default_timer() - start_time
             top_words = get_top_predictions(output, vocab, mask_position)
             logging.debug(f'Top predicted words: {top_words}')
             logging.info("")
@@ -102,10 +106,13 @@ def main(model_dir=None):
                 output_sentence = saved_processed_sentence.replace('<mask>', word)
                 logging.info(f'Output sentence: {output_sentence}')
 
+            logging.info(f"Elapsed time: {elapsed_time:.3f} seconds\n")
             logging.info("")
         else:
             logging.info('No mask token found in the input sentence.')
 
+    total_time = timeit.default_timer() - start_total_time
+    logging.info(f"Total elapsed time: {total_time:.3f} seconds")
     logging.info("========================================")
     logging.info("")
 
