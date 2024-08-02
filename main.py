@@ -70,6 +70,7 @@ if __name__ == '__main__':
     BERT models using the Transformers pipeline.
 
     Models used:
+    - DTAI-KULeuven/robbertje-1-gb-non-shuffled5
     - pdelobelle/robbert-v2-dutch-base
     - DTAI-KULeuven/robbert-2022-dutch-base
     - DTAI-KULeuven/robbert-2023-dutch-base
@@ -80,6 +81,7 @@ if __name__ == '__main__':
     # set_log_level(logging.DEBUG)
 
     # Process sentences with different models
+    main("DTAI-KULeuven/robbertje-1-gb-non-shuffled")
     main("pdelobelle/robbert-v2-dutch-base")
     main("DTAI-KULeuven/robbert-2022-dutch-base")
     main("DTAI-KULeuven/robbert-2023-dutch-base")

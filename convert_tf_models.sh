@@ -2,6 +2,7 @@
 
 # Array of models to convert
 models=(
+  "DTAI-KULeuven/robbertje-1-gb-non-shuffled"
   "pdelobelle/robbert-v2-dutch-base"
   "DTAI-KULeuven/robbert-2022-dutch-base"
   "DTAI-KULeuven/robbert-2023-dutch-base"

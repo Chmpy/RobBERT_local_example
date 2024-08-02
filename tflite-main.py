@@ -137,6 +137,7 @@ if __name__ == "__main__":
     Uncomment the debug logging line to see more detailed output.
 
     Models used (TFLite versions):
+    - robbertje-1-gb-non-shuffled
     - robbert-v2-dutch-base
     - robbert-2022-dutch-base
     - robbert-2023-dutch-base
@@ -150,11 +151,14 @@ if __name__ == "__main__":
     # set_log_level(logging.DEBUG)
 
     # Process sentences with different TFLite models
+    main(model_dir='robbertje-1-gb-non-shuffled_tflite')
     main(model_dir='robbert-v2-dutch-base_tflite')
     main(model_dir='robbert-2022-dutch-base_tflite')
     main(model_dir='robbert-2023-dutch-base_tflite')
     main(model_dir='robbert-2023-dutch-large_tflite')
 
+    # Process sentences with different quantized TFLite models
+    main(model_dir='robbertje-1-gb-non-shuffled_tflite_int8')
     main(model_dir='robbert-v2-dutch-base_tflite_int8')
     main(model_dir='robbert-2022-dutch-base_tflite_int8')
     main(model_dir='robbert-2023-dutch-base_tflite_int8')
