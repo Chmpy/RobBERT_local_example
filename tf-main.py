@@ -70,6 +70,7 @@ def main(model_name):
 
     total_time = timeit.default_timer() - start_total_time
     logging.info(f"Total elapsed time: {total_time:.3f} seconds")
+    logging.info("Average time per sentence: {:.3f} seconds".format(total_time / len(sentences)))
     logging.info("========================================")
     logging.info("")
 
